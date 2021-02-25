@@ -1,9 +1,9 @@
 import api from "./modules/api.js";
 import views from "./modules/views.js";
 
-// console.log(api.testText());
 const searchParent = document.querySelector(".searchForm");
 const searchInput = document.querySelector(".searchInput");
+const $storyContainer = $(".story-container");
 const $leftStoriesList = $("#stories-left");
 const $rightStoriesList = $("#stories-right");
 let storyList;
@@ -23,7 +23,17 @@ function getSourceData() {
 }
 
 class Story {
-  constructor({ author, description, publishedAt, title, url, urlToImage }) {
+  constructor({
+    author,
+    description,
+    publishedAt,
+    title,
+    url,
+    urlToImage,
+    pos,
+    neu,
+    neg,
+  }) {
     this.author = author;
     this.title = title;
     this.description = description;
@@ -31,6 +41,9 @@ class Story {
     this.title = title;
     this.url = url;
     this.urlToImage = urlToImage;
+    this.pos = pos;
+    this.neu = neu;
+    this.neg = neg;
   }
 }
 
@@ -43,10 +56,7 @@ class StoryList {
   }
   static async getStories(topic) {
     try {
-      const data = await api.getArticles(
-          topic,
-          getSourceData()
-        );
+      const data = await api.getArticles(topic, getSourceData());
       console.log(data);
       const leftStoriesHl = data.left.headline;
       const leftStories = data.left.stories.map((story) => new Story(story));
@@ -67,16 +77,15 @@ class StoryList {
 async function getAndShowStories(topic) {
   storyList = await StoryList.getStories(topic);
   // console.log(storyList);
-  //add loading wheel
-  putStoriesOnPage();
+  try {
+    putStoriesOnPage();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function putStoriesOnPage() {
   //combine loops?
-  //empty story list html
-  // let leftSourceName, leftSourceUrl, rightSourceName, rightSourceUrl;
-  // [leftSourceName, leftSourceUrl] = storyList.leftStoriesHl.source_info;
-  // [rightSourceName, rightSourceUrl] = storyList.rightStoriesHl.source_info;
 
   const leftHeadline = views.generateSourceHeadline(storyList.leftStoriesHl);
   const rightHeadline = views.generateSourceHeadline(storyList.rightStoriesHl);
@@ -107,6 +116,7 @@ const getQuery = function () {
 searchParent.addEventListener("submit", async function (e) {
   e.preventDefault();
   clear();
+
   const topic = getQuery();
   if (!topic) return;
   await getAndShowStories(topic);

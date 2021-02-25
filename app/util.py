@@ -1,21 +1,29 @@
 import requests
+import datetime
 from app.sentAn import sentiment_scores
 from app import db
 from app.secrets import API_KEY
 from app.models import NewsSources
 from urllib.parse import urlparse, urlsplit
 
-BASE_URL = 'https://newsapi.org/v2/'
 
-# https://newsapi.org/v2/everything?q=fire&from=2020-09-09&to=2020-09-09&domains=foxnews.com&sortBy=popularity&apiKey=b31bcb1b64a847a6ae2e34abd641b31c
+BASE_URL = 'https://newsapi.org/v2/'
+TODAY = datetime.date.today()
+
+
+def getLastMonthDate(today):
+    previous_month = today.month - 1
+    if previous_month == 0:
+        previous_month = 12
+    return f'{today.year}-{previous_month}-{today.day}'
 
 
 class NewsData:
-    def __init__(self, domain='cnn.com', q='trump'):
+    def __init__(self, domain='abcnews.go.com', q='trump'):
         self.domain = domain
         self.q = q
         self.art_res = requests.get(f'{BASE_URL}/everything', params={'apiKey': API_KEY, 'q': q,
-                                                                      'from': '2021-02-02', 'to': '2021-02-17', 'domains': domain, 'sortBy': 'popularity'})
+                                                                      'from': getLastMonthDate(TODAY), 'to': TODAY, 'domains': domain, 'sortBy': 'publishedAt'})
         self.art_data = self.art_res.json()
         self.source_res = requests.get(
             f'{BASE_URL}/sources', params={'apiKey': API_KEY, 'language': 'en'})
@@ -25,8 +33,11 @@ class NewsData:
         articles_list = []
         for article in self.art_data['articles']:
             articles_list.append(article)
-        articles_analyzed = sentiment_scores(articles_list)
-        return articles_analyzed
+        articles_scores = sentiment_scores(articles_list)
+        article_data = {'articleList': articles_list,
+                        'articleScores': articles_scores}
+        # print(article_data)
+        return article_data
 
     def getSources(self):
         source_list = []
@@ -34,6 +45,8 @@ class NewsData:
 
             source_list.append(source)
         return source_list
+
+# trims the source URL to fit the API required format for making calls
 
 
 def trimUrl(url):
@@ -46,6 +59,8 @@ def trimUrl(url):
         newUrl = o.netloc
     return newUrl
 
+# makes a call to the API retreiving all news sources, loops through the sources, trimming the URL's and adding them to the DB
+
 
 def populateSourcesTable():
     res = NewsData()
@@ -55,6 +70,17 @@ def populateSourcesTable():
                         category=i['category'], language=i['language'])
         db.session.add(a)
     db.session.commit()
+
+# delete identified non working sources from DB
+
+
+# def cleanNonSources():
+#     abc = NewsSources.query.filter(NewsSources.name.startswith('ABC')).all()
+#     for source in abc:
+#         db.session.delete(source)
+#     db.session.commmit()
+
+# query the source table and place pertinent data in the list to be returned
 
 
 def sourcesQuery():
@@ -68,3 +94,8 @@ def sourcesQuery():
                            'lang': s.language
                            })
     return sourceList
+
+
+# for value in db.session.query(NewsSources.category).distinct():
+
+# Reformat the source object for category
