@@ -9,7 +9,7 @@ from urllib.parse import urlparse, urlsplit
 
 BASE_URL = 'https://newsapi.org/v2/'
 TODAY = datetime.date.today()
-
+API_KEY = 'b31bcb1b64a847a6ae2e34abd641b31c'
 
 def getLastMonthDate(today):
     previous_month = today.month - 1
@@ -22,7 +22,7 @@ class NewsData:
     def __init__(self, domain='abcnews.go.com', q='trump'):
         self.domain = domain
         self.q = q
-        self.art_res = requests.get(f'{BASE_URL}/everything', params={'apiKey': b31bcb1b64a847a6ae2e34abd641b31c, 'q': q,
+        self.art_res = requests.get(f'{BASE_URL}/everything', params={'apiKey': API_KEY, 'q': q,
                                                                       'from': getLastMonthDate(TODAY), 'to': TODAY, 'domains': domain, 'sortBy': 'publishedAt'})
         self.art_data = self.art_res.json()
         self.source_res = requests.get(
