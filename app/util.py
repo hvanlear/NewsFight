@@ -2,7 +2,7 @@ import requests
 import datetime
 from app.sentAn import sentiment_scores
 from app import db
-from app.secrets import API_KEY
+# from app.secrets import API_KEY
 from app.models import NewsSources
 from urllib.parse import urlparse, urlsplit
 
@@ -22,7 +22,7 @@ class NewsData:
     def __init__(self, domain='abcnews.go.com', q='trump'):
         self.domain = domain
         self.q = q
-        self.art_res = requests.get(f'{BASE_URL}/everything', params={'apiKey': API_KEY, 'q': q,
+        self.art_res = requests.get(f'{BASE_URL}/everything', params={'apiKey': b31bcb1b64a847a6ae2e34abd641b31c, 'q': q,
                                                                       'from': getLastMonthDate(TODAY), 'to': TODAY, 'domains': domain, 'sortBy': 'publishedAt'})
         self.art_data = self.art_res.json()
         self.source_res = requests.get(
