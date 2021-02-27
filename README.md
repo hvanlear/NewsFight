@@ -1,6 +1,6 @@
 # News Fight
 
-News Fight is a full stack web application that utilizes the python Vader Sentiment package to analyze top news stories, from any two major news outlets for, a desired topic. It provides individual analysis scores for stories and an overall average for all stories returned. 
+News Fight is a full stack web application that utilizes the python Vader Sentiment package to analyze top news stories, from any two major news outlets, for a desired topic. It provides individual analysis scores for stories and an overall average for all stories returned. 
 
 ## Built With
 
