@@ -44,3 +44,8 @@ def updated_search(topic):
     }
     res = make_response(newsResponse, 200)
     return res
+
+
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')

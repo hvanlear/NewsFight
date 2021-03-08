@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block title %} About {% endblock %} {% block
+content %}
+<h1 class="title title-about">
+  AB<img class='globe-about globe-svg' src="{{ url_for('static',
+  filename="assets/globe.svg") }}" alt="">UT
+</h1>
+<div class="conatiner">
+  <h3>Where does the news data come from?</h3>
+  <p>
+    The news stories are retrieved from the
+    <a href="https://newsapi.org/" target="_blank">News API</a>.
+  </p>
+  <h3>Where/How are the Sentiment scores achieved?</h3>
+  <p>
+    The project utilizes the python package
+    <a href="https://pypi.org/project/vaderSentiment/">Vader Sentiment</a>
+    (Valence Aware Dictionary and sEntiment Reasoner). It's particularly attuned
+    for lower word count blocks of text and because every story object contains
+    a small, easily digestible description, Vader was the perfect choice. Prior
+    to displaying the news items on the page, each individual story is filtered
+    through the analyzer and three percentage scores are returned depending on
+    that story's description phrasing. All scores are averaged and then returned
+    for each batch of stories at the top of the two news containers for an
+    overall representation .
+  </p>
+  <h3>Why create this project?</h3>
+  <p>
+    A news outlet can play a large roll in the way their individual readers view
+    the world. It's no secret that the light (positive, neutral, or negative) a
+    particular news segment is presented in is likely influenced by that
+    outlet's own biases. The goal behind the project was to utilize a tool like
+    Vader to attempt to quantify those biases so that the consumer can shape a
+    more informed opinion.
+  </p>
+</div>
+{% endblock %}

@@ -35,45 +35,26 @@ content %}
             required
           />
           <button class="btn btn-primary">Search Articles</button>
-          
         </div>
       </form>
     </dv>
   </div>
 </div>
-<div class="contaier story-container">
-  <div class="spinner"></div> 
+<div id="startchange" class="contaier story-container">
+  <div class="spinner"></div>
   <div class="row">
     <div class="col">
       <!-- LEFT NEWS SOURCES-->
       <!-- LEFT NEWS SOURCES- -->
       <div class="source-select-container">
-      <!-- <label for="left_sources">Select a News Source</label> -->
-      <select name="left_sources" class="form-control" id="left-sources" required>
-        <option disabled selected value=""> -- Select a News Source -- </option>
-        {% for source in sources %}
-        <option
-          data-fullurl="{{source['full_url']}}"
-          value="{{source['formatted_url']}}"
+        <!-- <label for="left_sources">Select a News Source</label> -->
+        <select
+          name="left_sources"
+          class="form-control"
+          id="left-sources"
+          required
         >
-          {{source['name']}}
-        </option>
-        {% endfor %}
-      </select>
-      
-    </div> 
-
-      <!-- LEFT NEWS STORIES- -->
-      <ul class="stories" id="stories-left">
-      </ul>
-    </div>
-
-    <!-- RIGHT NEWS SOURCES- -->
-    <div class="col">
-      <div class="source-select-container">
-        <!-- <label for="right_sources">Select a News Source</label> -->
-        <select name="right_sources" class="form-control" id="right-sources" >
-          <option disabled selected value=""> -- Select a News Source -- </option>
+          <option disabled selected value="">-- Select a News Source --</option>
           {% for source in sources %}
           <option
             data-fullurl="{{source['full_url']}}"
@@ -83,31 +64,50 @@ content %}
           </option>
           {% endfor %}
         </select>
-      
       </div>
-    
-      <!-- RIGHT NEWS STORIES- -->
-     
-      <ul class="stories" id="stories-right">
 
-      </ul>
+      <!-- LEFT NEWS STORIES- -->
+      <ul class="stories" id="stories-left"></ul>
+    </div>
+
+    <!-- RIGHT NEWS SOURCES- -->
+    <div class="col">
+      <div class="source-select-container">
+        <!-- <label for="right_sources">Select a News Source</label> -->
+        <select name="right_sources" class="form-control" id="right-sources">
+          <option disabled selected value="">-- Select a News Source --</option>
+          {% for source in sources %}
+          <option
+            data-fullurl="{{source['full_url']}}"
+            value="{{source['formatted_url']}}"
+          >
+            {{source['name']}}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- RIGHT NEWS STORIES- -->
+
+      <ul class="stories" id="stories-right"></ul>
     </div>
   </div>
 </div>
 
-
 <script>
-  window.onscroll = function() {myFunction()};
-  
+  window.onscroll = function () {
+    myFunction();
+  };
+
   var navbar = document.getElementById("navbar");
   var sticky = navbar.offsetTop;
-  
+
   function myFunction() {
     if (window.pageYOffset >= sticky) {
-      navbar.classList.add("sticky")
+      navbar.classList.add("sticky");
     } else {
       navbar.classList.remove("sticky");
     }
   }
-  </script>
+</script>
 {% endblock %}

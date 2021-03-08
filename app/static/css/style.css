@@ -31,8 +31,15 @@ footer {
 }
 
 #navbar {
-  margin-left: 2rem;
   z-index: 1000;
+}
+
+a.nav-item {
+  padding: 1rem;
+}
+
+.navbar {
+  justify-content: flex-start !important;
 }
 
 .title-hr {
@@ -61,6 +68,10 @@ footer {
 
 .title-container {
   text-align: center;
+}
+
+h1.title.title-about {
+  margin-bottom: 1.5rem;
 }
 
 .source-select-container {

@@ -25,7 +25,9 @@
     {% endif %}
   </head>
   <body>
-    <div id="navbar"><a href="#top">News Fight</a></div>
+    <div id="navbar" class="navbar navbar-default navbar-fixed-top"><a class="nav-item" href="/index#top">News Fight</a><a class="nav-item" href="/about">About</a></div>
+
+	</nav>
     <div class="container">
       <main>{% block content %}CONTENT HERE{% endblock %}</main>
       <footer class="d-flex justify-content-center">
@@ -39,12 +41,16 @@
       </footer>
     </div>
     {% block scripts %}
+
+
     <!-- Library JS & our JS -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 
       <script type="module" src="/static/js/modules/views.js"></script> 
       <script type="module" src="/static/js/modules/api.js"></script> 
       <script type="module" src="{{ url_for('static', filename="js/main.js") }}"></script> 
+
+
 {% endblock %}
   </body>
 </html>

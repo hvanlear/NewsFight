@@ -11,6 +11,7 @@ BASE_URL = 'https://newsapi.org/v2/'
 TODAY = datetime.date.today()
 API_KEY = 'b31bcb1b64a847a6ae2e34abd641b31c'
 
+
 def getLastMonthDate(today):
     previous_month = today.month - 1
     if previous_month == 0:
@@ -19,7 +20,7 @@ def getLastMonthDate(today):
 
 
 class NewsData:
-    def __init__(self, domain='abcnews.go.com', q='trump'):
+    def __init__(self, domain='cnn.com', q='trump'):
         self.domain = domain
         self.q = q
         self.art_res = requests.get(f'{BASE_URL}/everything', params={'apiKey': API_KEY, 'q': q,
@@ -74,14 +75,7 @@ def populateSourcesTable():
 # delete identified non working sources from DB
 
 
-# def cleanNonSources():
-#     abc = NewsSources.query.filter(NewsSources.name.startswith('ABC')).all()
-#     for source in abc:
-#         db.session.delete(source)
-#     db.session.commmit()
-
 # query the source table and place pertinent data in the list to be returned
-
 
 def sourcesQuery():
     sourcesQuery = NewsSources.query.all()
