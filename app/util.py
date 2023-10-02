@@ -2,14 +2,14 @@ import requests
 import datetime
 from app.sentAn import sentiment_scores
 from app import db
-# from app.secrets import API_KEY
+from app.secrets import API_KEY
 from app.models import NewsSources
 from urllib.parse import urlparse, urlsplit
 
 
 BASE_URL = 'https://newsapi.org/v2/'
 TODAY = datetime.date.today()
-API_KEY = 'b31bcb1b64a847a6ae2e34abd641b31c'
+
 
 
 def getLastMonthDate(today):
