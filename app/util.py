@@ -7,10 +7,15 @@ from app.models import NewsSources
 from urllib.parse import urlparse, urlsplit
 
 
+
+
+
 BASE_URL = 'https://newsapi.org/v2/'
 TODAY = datetime.date.today()
+# API_KEY = ''
 
-
+# def configure():
+#     load_dotenv()
 
 def getLastMonthDate(today):
     previous_month = today.month - 1

@@ -5,6 +5,7 @@ from app.util import NewsData, sourcesQuery, populateSourcesTable, TODAY, getLas
 import requests
 
 
+
 @app.errorhandler(500)
 def serverError(error):
     return jsonify({'message': 'No Stories Found For this Topic'}), 500
